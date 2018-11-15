@@ -8,6 +8,7 @@ public class Submission {
     private int hours;
     private int[] exercises;
     private String course;
+    private int totalExercises;
 
     public void setWeek(int week) {
         this.week = week;
@@ -32,7 +33,14 @@ public class Submission {
     public int[] getEcercises() {
         return exercises;
     }
-    
+
+    public void setTotalExercises(int totalExercises) {
+        this.totalExercises = totalExercises;
+    }
+
+    public int getTotalExercises() {
+        return totalExercises;
+    }
     
     
     public void setCourse(String course) {
@@ -47,7 +55,7 @@ public class Submission {
     public String toString() {
         String exerciseString = Arrays.toString(exercises);
         exerciseString = exerciseString.substring(1, exerciseString.length() - 1);
-        return String.format("%s, viikko %d tehtyjä tehtäviä yhteensä %d aikaa kului %d tehdyt tehtävät: %s", course, week, exercises.length, hours, exerciseString);
+        return String.format("viikko %d:\n tehtyjä tehtäviä %d/%d aikaa kului %d tehdyt tehtävät: %s", week, exercises.length, totalExercises, hours, exerciseString);
     }
     
 }
