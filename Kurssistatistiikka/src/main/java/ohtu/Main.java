@@ -3,6 +3,9 @@ package ohtu;
 import com.google.gson.Gson;
 import java.io.IOException;
 import org.apache.http.client.fluent.Request;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.util.stream.IntStream;
 
 public class Main {
 
@@ -44,6 +47,16 @@ public class Main {
                     }
                 }
                 System.out.print(String.format("\nyhteensä: %d/%d tehtävää %d tuntia\n\n", completedExercises, c.totalExercises(), totalHours));
+                
+                String courseStatsText = Request.Get("https://studies.cs.helsinki.fi/courses/" + c.getName() + "/stats").execute().returnContent().asString();
+                JsonParser parser = new JsonParser();
+                JsonObject parsittuData = parser.parse(courseStatsText).getAsJsonObject();
+                
+                System.out.printf("kurssilla yhteensä %d palautusta, palautettuja tehtäviä %d kpl, aikaa käytetty yhteensä %d tuntia\n\n",
+                        parsittuData.entrySet().stream().mapToInt(e -> e.getValue().getAsJsonObject().get("students").getAsInt()).sum(),
+                        parsittuData.entrySet().stream().mapToInt(e -> e.getValue().getAsJsonObject().get("exercise_total").getAsInt()).sum(),
+                parsittuData.entrySet().stream().mapToInt(e -> e.getValue().getAsJsonObject().get("hour_total").getAsInt()).sum());
+                
             }
         }
 
