@@ -1,0 +1,4 @@
+pekka;akkep
+jukka;akkuj
+akkep;salakala1
+pirjo;salakala1
